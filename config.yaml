@@ -1,0 +1,14 @@
+# Train/val/test sets
+train: 'D:/University_Windsor/Winter_2024/ASE/POC\images\train'
+val: 'D:/University_Windsor/Winter_2024/ASE/POC\images\val'
+test: 'D:/University_Windsor/Winter_2024/ASE/POC\images\test'
+
+names:
+  0: Background
+  1: Human divers
+  2: Aquatic plants and sea-grass
+  3: Wrecks and ruins
+  4: Robots
+  5: Reefs and invertebrates
+  6: Fish and vertebrates
+  7: Sea-floor and rocks

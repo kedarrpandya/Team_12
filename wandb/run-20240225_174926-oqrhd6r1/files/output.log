@@ -1,0 +1,20 @@
+
+[34m[1mtrain: [39m[22mScanning D:\University_Windsor\Winter_2024\ASE\POC\labels\train... 194 images, 0 backgrounds, 0 corrupt:  14%|█▎
+
+
+
+
+[34m[1mtrain: [39m[22mScanning D:\University_Windsor\Winter_2024\ASE\POC\labels\train... 1266 images, 0 backgrounds, 0 corrupt:  89%|█
+[34m[1mtrain: [39m[22mScanning D:\University_Windsor\Winter_2024\ASE\POC\labels\train... 1415 images, 0 backgrounds, 0 corrupt: 100%|█
+
+[34m[1mval: [39m[22mScanning D:\University_Windsor\Winter_2024\ASE\POC\labels\val... 110 images, 0 backgrounds, 0 corrupt: 100%|██████
+[34m[1mval: [39m[22mNew cache created: D:\University_Windsor\Winter_2024\ASE\POC\labels\val.cache
+Plotting labels to runs\segment\train\labels.jpg...
+[34m[1moptimizer:[39m[22m 'optimizer=auto' found, ignoring 'lr0=0.01' and 'momentum=0.937' and determining best 'optimizer', 'lr0' and 'momentum' automatically...
+[34m[1moptimizer:[39m[22m AdamW(lr=0.000833, momentum=0.9) with parameter groups 86 weight(decay=0.0), 97 weight(decay=0.0005), 96 bias(decay=0.0)
+[34m[1mTensorBoard: [39m[22mmodel graph visualization added ✅
+Image sizes 640 train, 640 val
+Using 0 dataloader workers
+Logging results to [1mruns\segment\train
+Starting training for 100 epochs...
+      Epoch    GPU_mem   box_loss   seg_loss   cls_loss   dfl_loss  Instances       Size

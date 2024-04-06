@@ -1,0 +1,47 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.9.4",
+    "heartbeatAt": "2024-02-25T22:49:27.824115",
+    "startedAt": "2024-02-25T22:49:26.810346",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "segmentation-using-yolov8.ipynb",
+    "codePathLocal": "segmentation-using-yolov8.ipynb",
+    "root": "D:\\University_Windsor\\Winter_2024\\ASE\\POC",
+    "host": "LAPTOP-OHGJHODB",
+    "username": "harsh",
+    "executable": "c:\\users\\harsh\\appdata\\local\\programs\\python\\python39\\python.exe",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 991.0,
+        "min": 0.0,
+        "max": 1190.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 991.0,
+            "min": 0.0,
+            "max": 1190.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 97.65624618530273,
+            "used": 15.29410171508789
+        }
+    },
+    "gpu": "NVIDIA GeForce MX110",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce MX110",
+            "memory_total": 2147483648
+        }
+    ],
+    "memory": {
+        "total": 7.810054779052734
+    }
+}
