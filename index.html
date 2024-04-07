@@ -1,0 +1,287 @@
+{#L1 labels/object#}
+{#L2 Logo Detection#}
+{#L3 Text/OCR#}
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Object Detection</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script>
+
+        function runPythonScript() {
+            fetch('/run-script')
+                .then(response => response.text())
+                .then(data => {
+                    // Display the script execution status in the #script-status div
+                    document.getElementById('script-status').innerText = 'Script executed: ' + data;
+                })
+                .catch((error) => {
+                    console.error('Error executing script:', error);
+                    // Display the error message in the #script-status div
+                    document.getElementById('script-status').innerText = 'Error executing script: ' + error;
+                });
+        }
+
+            setInterval(function(){
+            // Add a timestamp to the image source to prevent caching
+                document.getElementById('plot-image').src = '/get-plot?t=' + new Date().getTime();
+        }, 700);  // Update every 5 seconds
+
+    //     function fetchGPSData() {
+    //     fetch('/gps-output')
+    //         .then(response => response.text())
+    //         .then(data => {
+    //             document.getElementById('gps-output').textContent = data;
+    //         })
+    //         .catch(error => console.error('Error fetching GPS data:', error));
+    // }
+
+    // Fetch GPS data every 5 seconds
+//     setInterval(fetchGPSData, 700);
+                
+//         // Initialize the map and set its view to a given position and zoom level
+//         var map = L.map('map').setView([0, 0], 1); // Set view to arbitrary coordinates and a world zoom level
+
+//         // Set up the OpenStreetMap layer
+//         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//             maxZoom: 19,
+//             attribution: '© OpenStreetMap contributors'
+//         }).addTo(map);
+
+//         // Function to update map with new data
+//         function updateMap(longitude, latitude) {
+//             // Remove previous layers/markers
+//             map.eachLayer(function (layer) {
+//                 // Assuming you're not removing the tile layer
+//                 if (!!layer.toGeoJSON) {
+//                     map.removeLayer(layer);
+//                 }
+//             });
+
+//             // Create a marker and set its position to the new coordinates
+//             L.marker([latitude, longitude]).addTo(map);
+
+//             // Center the map on the new marker
+//             map.setView([latitude, longitude], 13); // 13 is a street level zoom
+//     }
+
+
+
+        var socket = io();
+        // function startGPS(){
+        //     fetch('/start-gps')
+        // }
+        socket.on('accelerometer_data',function(data) {
+            console.log(data)
+            updateMap(data.longitude, data.latitude);
+            document.getElementById('accelerometer-x').textContent = data.x;
+            document.getElementById('accelerometer-y').textContent = data.y;
+            document.getElementById('accelerometer-z').textContent = data.z;
+            // document.getElementById('longitude').textContent = data.longitude;
+            // document.getElementById('latitude').textContent = data.latitude;
+            // document.getElementById('altitude').textContent = data.altitude;
+            // document.getElementById('bearing').textContent = data.bearing;
+            // document.getElementById('accuracy').textContent = data.accuracy;
+            // document.getElementById('speed').textContent = data.speed;
+            // document.getElementById('time').textContent = data.time;
+            });
+
+        // var socket = io.connect('http://' + document.domain + ':' + location.port);
+        
+
+        
+    </script>
+
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Add this to the <head> section of your HTML file -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+          integrity="sha512-xX2rYBFJSj86W54Fyv1de80DWBq7zYLn2z0I9bIhQG+rxIF6XVJUpdGnsNHWRa6AvP89vtFupEPDP8eZAtu9qA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/brands.min.css"
+          integrity="sha512-OivR4OdSsE1onDm/i3J3Hpsm5GmOVvr9r49K3jJ0dnsxVzZgaOJ5MfxEAxCyGrzWozL9uJGKz6un3A7L+redIQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-primary bg-dark ">
+    <div class="container-fluid">
+        <center><a class="navbar-brand text-light" href="#">Smart Exploration</a></center>
+    </div>
+</nav>
+
+
+<hr>
+
+
+<div class="container-fluid mt-3">
+    <div style="text-align: center;"><p class="h3">Input Settings</p></div>
+
+    <hr>
+    <div class="row">
+        <div class="row col-md-9 mt-4">
+            <div class="col-md-4">
+                <div style="text-align: center;">
+                    <div class="mb-3">
+                        <label for="turn_off" class="form-label">Show Stream</label><br>
+                        <label class="switch">
+                            <input id="turn_off" value="1" name="turn_off" type="checkbox" onclick="toggleOffSwitch()"/>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div style="text-align: center;">
+                    <div class="mb-3">
+                        <label for="flip-horizontal" class="form-label">Flip Horizontally</label><br>
+                        <label class="switch">
+                            <input id="flip-horizontal" value="0" name="flip-horizontal" type="checkbox"
+                                   onclick="toggleHSwitch()"/>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+
+                <div style="text-align: center;">
+                    <div class="mb-3">
+                        <label for="run_detection" class="form-label">Run Detection</label><br>
+                        <label class="switch">
+                            <input id="run_detection" value="0" name="run_detection" type="checkbox"
+                                   onclick="toggleDetSwitch()"/>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row col-md-3">
+            <div class="col-md-12">
+                <div style="text-align: center;">
+                    <div class="mb-3 mt-4">
+                        <form action="/" method="POST" style="text-align: center;">
+                            <label for="slider" class="form-label">Confidence Threshold</label><br>
+                            <input type="range" id="slider" name="slider" min="50" max="100">
+                        </form>
+                        <input type="hidden" id="sliderValue" name="sliderValue" value="75"><br>
+                        <span class="border border-3 bg-light m-2 p-1 mt-5" id="conf_display">75</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <hr>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div style="text-align: center;"><h3>Live Stream</h3></div>
+            <div class="container1" style="text-align: center;">
+                <div id="container">
+                    <img class="center" src="/video_feed" id="videoElement">
+                </div>
+
+
+                <div style="padding: 5px;position: absolute; bottom: 10%; left: 50%; transform: translate(-50%, -50%);"
+                     id="banner2"
+                     class="text-center overlay2 text-primary rounded">
+                    <a class="no-link" style="padding: 15px"
+                       href="https://twitter.com/Ecomlootdeals/status/1424597680966311936"
+                       target="_blank"><span class="fs-8 ">
+                    <i class="fa-brands fa-amazon text-primary me-3 "></i> <i id="spanTxt">Apple IPhone</i>  </span></a>
+                    <button id="closeAd" class="frame"><i
+                            class="fa-solid fa-circle-xmark text-primary me-2"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6">
+            <div style="text-align: center;"><h3>Output</h3></div>
+            <div id="terminal"></div>
+        </div>
+    </div>
+    <div class="text-center m-5">
+        <button type="button" class="btn btn-dark" onclick="runPythonScript()">Sensor Details</button>
+    </div>
+    
+    <!-- Plot Image Section -->
+    <div class="row">
+        <div class="col-md-6">
+            <div style="text-align: center;"><h3>Plot</h3></div>
+            <div class="container1" style="text-align: center;">
+                <div id="container">
+                    <img id="plot-image" src="/get-plot" alt="Plot Image" class="img-fluid">
+                </div>
+
+
+                <div style="padding: 5px;position: absolute; bottom: 10%; left: 50%; transform: translate(-50%, -50%);"
+                     id="banner2"
+                     class="text-center overlay2 text-primary rounded">
+                    
+                </div>
+
+            </div>
+
+        </div>
+</div>
+<!-- <button  type="button" class="btn btn-dark" onclick="startGPS()">Start GPS Data Processing</button>
+<div id="container">
+    <div id="gps-output">Waiting for GPS data...</div>
+</div>
+ -->
+
+
+
+<hr>
+
+</button>
+
+
+</body>
+
+
+</html>
+<script>
+
+</script>
